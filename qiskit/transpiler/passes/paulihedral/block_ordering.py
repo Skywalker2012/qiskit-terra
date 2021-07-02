@@ -127,7 +127,7 @@ def lex_ordering(pauliIRprogram):
     return pauliIRprogram
     
     
-def gco_ordering(pauliIRprogram, **kwargs):
+def gco_ordering(pauliIRprogram, *args):
     pauliIRprogram = lex_ordering(pauliIRprogram)
     pauli_layers = [0] * len(pauliIRprogram)
     for i in range(len(pauliIRprogram)):

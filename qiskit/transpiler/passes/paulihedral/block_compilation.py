@@ -214,6 +214,10 @@ class pNode:
 
 class pGraph:
     def __init__(self, G, C):
+        
+        G = np.array(G)
+        C = np.array(C)
+                
         n = G.shape[0]
         self.leng = n
         self.G = G # adj matrix
@@ -522,14 +526,14 @@ def opt_sc_backend(pauli_layers):
     logical_qubit_num = len(pauli_layers[0][0][0][0])
     
     # construct coupling graph (undirected), cost distance matrix
-    adj_mat = 
-    dist_mat = 
+    adj_mat = [[0, 1, 0, 0], [1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0]]
+    dist_mat = [[0, 0.01, 0.02, 0.03], [0.01, 0, 0.01, 0.02], [0.02, 0.01, 0, 0.01], [0.03, 0.02, 0.01, 0]]
     sc_device_graph = pGraph(adj_mat, dist_mat)
     
     # find dense connected subset for initial mapping
     logical_to_physical_mapping = dummy_qubit_mapping(sc_device_graph, logical_qubit_num)
    
-    physical_qubit_num = len(graph)
+    physical_qubit_num = len(sc_device_graph)
     
     qc = QuantumCircuit(physical_qubit_num)
     
@@ -574,7 +578,7 @@ def opt_sc_backend(pauli_layers):
             connected_component = max_dfs_tree(sc_device_graph, physical_block_cover, sc_device_graph[root_physical_qubit])
             physical_qubit_tree = tree(sc_device_graph, connected_component)
             for pauli_str in current_block[:-1]:
-                tree_synthesis1(qc, sc_device_graph, logical_to_physical_mapping, physical_qubit_tree, pauli_str, current_block[-1])
+                tree_synthesis(qc, sc_device_graph, logical_to_physical_mapping, physical_qubit_tree, pauli_str, current_block[-1])
     return qc
 
 # '''-------------'''
